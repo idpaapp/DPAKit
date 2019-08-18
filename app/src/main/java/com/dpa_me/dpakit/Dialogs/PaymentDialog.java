@@ -26,8 +26,7 @@ import static com.dpa_me.dpakit.Units.HandleUnit.HandleString.ClearSigns;
 import static com.dpa_me.dpakit.Units.HandleUnit.mMainPageActivity;
 
 @SuppressLint("ValidFragment")
-public class PaymentDialog extends DialogFragment implements
-        View.OnClickListener {
+public class PaymentDialog extends DialogFragment  {
 
     private Context mContext;
     private String mAmount;
@@ -104,28 +103,26 @@ public class PaymentDialog extends DialogFragment implements
         pdTxtPrice.setText(mAmount);
         pdTxtDesc.setText(mBuyDesc);
 
-        pdBtnGotoBank.setOnClickListener(this);
-        pdBtnCancel.setOnClickListener(this);
+        pdBtnGotoBank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPayment();
+                onOpration.onConfirmPayment();
+                dismiss();
+            }
+        });
+        pdBtnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CloseProgressDialog();
+                onOpration.onRejectPayment();
+                dismiss();
+            }
+        });
 
         return view;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.pd_btn_goto_bank:
-                requestPayment();
-                onOpration.onConfirmPayment();
-                dismiss();
-                break;
-            default: {
-                CloseProgressDialog();
-                onOpration.onRejectPayment();
-                dismiss();
-                break;
-            }
-        }
-    }
 
     private void requestPayment() {
 
