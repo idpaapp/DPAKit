@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/MainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transBackColor">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/colorBackground"
+        app:cardCornerRadius="8sp"
+        app:cardElevation="4sp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5sp">
+
+            <LinearLayout
+                android:id="@+id/imgTakeCam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="2sp"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="150sp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10sp"
+                    android:gravity="right|center_vertical"
+                    android:text="@string/lblCamera"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:padding="7sp"
+                    android:src="@drawable/ic_photo_camera" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/imgTakeGallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5sp"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="150sp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10sp"
+                    android:gravity="right|center_vertical"
+                    android:text="@string/lblGallry"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:padding="7sp"
+                    android:src="@drawable/ic_gallery" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/imgTakeTrash"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5sp"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="150sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10sp"
+                        android:gravity="right|center_vertical"
+                        android:text="@string/lblDelete"
+                        android:textColor="@color/primary_text"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="35sp"
+                        android:layout_height="35sp"
+                        android:padding="7sp"
+                        android:src="@drawable/ic_delete" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

@@ -1,0 +1,155 @@
+package com.dpa_me.dpakit.Dialogs;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.DialogFragment;
+
+import com.dpa_me.dpakit.R;
+import com.dpa_me.dpakit.ZarinPal.OnCallbackRequestPaymentListener;
+import com.dpa_me.dpakit.ZarinPal.PaymentRequest;
+import com.dpa_me.dpakit.ZarinPal.ZarinPal;
+
+import static com.dpa_me.dpakit.Units.HandleUnit.HandleApplication.CloseProgressDialog;
+import static com.dpa_me.dpakit.Units.HandleUnit.HandleString.ClearSigns;
+import static com.dpa_me.dpakit.Units.HandleUnit.mMainPageActivity;
+
+@SuppressLint("ValidFragment")
+public class PaymentDialog extends DialogFragment implements
+        View.OnClickListener {
+
+    private Context mContext;
+    private String mAmount;
+    private String mBuyDesc;
+    private String mMobile;
+    private String mEmail;
+
+    private int REQUEST_RESULT = 0;
+    private AppCompatTextView pdTxtPrice;
+    private AppCompatTextView pdBtnCancel;
+    private AppCompatTextView pdBtnGotoBank;
+    private AppCompatTextView pdTxtDesc;
+
+    private void initView(View view) {
+        pdTxtPrice = view.findViewById(R.id.pd_txt_price);
+        pdBtnCancel = view.findViewById(R.id.pd_btn_cancel);
+        pdBtnGotoBank = view.findViewById(R.id.pd_btn_goto_bank);
+        pdTxtDesc = view.findViewById(R.id.pd_txt_desc);
+    }
+
+
+    public interface IOpration {
+        void onConfirmPayment();
+
+        void onRejectPayment();
+
+        void onBankResponsed();
+    }
+
+    public IOpration onOpration = null;
+
+    public PaymentDialog setOnClickBtns(IOpration onOpration) {
+        this.onOpration = onOpration;
+        return this;
+    }
+
+    public PaymentDialog setAmount(String amount) {
+        this.mAmount = amount;
+        return this;
+    }
+
+    public PaymentDialog setMobile(String mobile) {
+        this.mMobile = mobile;
+        return this;
+    }
+
+    public PaymentDialog setEmail(String userEmail) {
+        this.mEmail = userEmail;
+        return this;
+    }
+
+    public PaymentDialog setBuyDescription(String buyDescription) {
+        this.mBuyDesc = buyDescription;
+        return this;
+    }
+
+    public PaymentDialog() {
+        super();
+    }
+
+    private void initViews(View view) {
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle args) {
+        mContext = getActivity();
+        View view = inflater.inflate(R.layout.paydialog, container, false);
+        initViews(view);
+
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        getDialog().getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        pdTxtPrice.setText(mAmount);
+        pdTxtDesc.setText(mBuyDesc);
+
+        pdBtnGotoBank.setOnClickListener(this);
+        pdBtnCancel.setOnClickListener(this);
+
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.pd_btn_goto_bank:
+                requestPayment();
+                onOpration.onConfirmPayment();
+                dismiss();
+                break;
+            default: {
+                CloseProgressDialog();
+                onOpration.onRejectPayment();
+                dismiss();
+                break;
+            }
+        }
+    }
+
+    private void requestPayment() {
+
+        ZarinPal purchase = ZarinPal.getPurchase(getContext());
+        PaymentRequest payment = ZarinPal.getPaymentRequest();
+
+        payment.setMerchantID("6bffb16e-9abe-11e7-975e-000c295eb8fc");
+        payment.setAmount(Long.parseLong(ClearSigns(mAmount)));
+        payment.setDescription(mBuyDesc);
+        payment.setMobile(mMobile);
+        payment.setEmail(mEmail);
+        payment.setAfterRun(onOpration);
+        payment.setCallbackURL("restook://zarrinPayment");
+        purchase.startPayment(payment, new OnCallbackRequestPaymentListener() {
+            @Override
+            public void onCallbackResultPaymentRequest(int status, String authority, Uri paymentGatewayUri, Intent intent) {
+                if (status == 100) {
+                    mMainPageActivity.startActivityForResult(intent, REQUEST_RESULT);
+                    dismiss();
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.messOperationFailedOnBuy), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+    }
+}

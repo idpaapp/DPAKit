@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/MainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transBackColor">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/colorBackground"
+        app:cardCornerRadius="8sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_gravity="right"
+                android:layout_marginBottom="5sp"
+                android:gravity="center"
+                android:text="@string/lblPay"
+                android:textColor="@color/primary_text"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:paddingBottom="5sp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pd_txt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="5sp"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginRight="5sp"
+                    android:layout_marginBottom="10sp"
+                    android:gravity="right"
+                    android:text="@string/messBuyText"
+                    android:textColor="@color/primary_text"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pd_txt_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/pd_img_desc"
+                    android:layout_marginRight="2sp"
+                    android:layout_toLeftOf="@+id/pd_img_desc"
+                    android:gravity="fill_vertical|right"
+                    android:textColor="@color/primary_text"
+                    android:textSize="13sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pd_txt_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25sp"
+                    android:layout_alignTop="@+id/pdimgBudget"
+                    android:layout_alignBottom="@+id/pdimgBudget"
+                    android:layout_marginRight="3sp"
+                    android:layout_toLeftOf="@+id/pdimgBudget"
+                    android:gravity="center_vertical|right"
+                    android:textColor="@color/primary_text"
+                    android:textSize="13sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/pd_txt_price"
+                    android:layout_alignBottom="@+id/pd_txt_price"
+                    android:layout_marginRight="5sp"
+                    android:layout_toLeftOf="@+id/pd_txt_price"
+                    android:gravity="center"
+                    android:text="@string/lblToman"
+                    android:textColor="@color/primary_text"
+                    android:textSize="13sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/pd_img_desc"
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    android:layout_below="@+id/pd_txt_title"
+                    android:layout_alignRight="@+id/pd_txt_title"
+                    android:layout_marginBottom="10sp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_shopping_cart"
+                    android:tint="@color/colorPrimary" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/pdimgBudget"
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    android:layout_below="@+id/pd_img_desc"
+                    android:layout_alignRight="@+id/pd_img_desc"
+                    android:src="@drawable/ic_money_bag"
+                    android:tint="@color/colorPrimary" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/pd_img_shetab"
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:layout_below="@+id/pd_txt_price"
+                    android:layout_alignRight="@+id/pdimgBudget"
+                    android:layout_marginTop="5sp"
+                    android:src="@drawable/ic_shetab" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:layout_below="@+id/pd_txt_price"
+                    android:layout_marginTop="5sp"
+                    android:layout_toLeftOf="@+id/pd_img_shetab"
+                    android:padding="5sp"
+                    android:layout_marginRight="5sp"
+                    android:src="@drawable/ic_zarrinpal" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:padding="5sp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pd_btn_cancel"
+                    android:layout_width="100sp"
+                    android:layout_height="30sp"
+                    android:layout_marginRight="5sp"
+                    android:background="@color/divider"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/lblCancel"
+                    android:textColor="@color/primary_text"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pd_btn_goto_bank"
+                    android:layout_width="140sp"
+                    android:layout_height="30sp"
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/lblGotoBank"
+                    android:textColor="@color/light_text"
+                    android:textColorLink="@color/colorPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

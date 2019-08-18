@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="transBackColor">#55f8f6f7</color>
+    <color name="colorBackground">#ffffff</color>
+    <color name="colorBackgroundDark">#fafafa</color>
+    <color name="colorBackgroundDarker">#efefef</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="light_text">#ffffff</color>
+    <color name="icons">#ffffff</color>
+    <color name="drawer_color">#ebfd7a53</color>
+    <color name="divider">#dcdcdc</color>
+    <color name="divider_light">#efefef</color>
+    <color name="divider_dark">#b6b6b6</color>
+    <color name="okColor">#66cc9a</color>
+    <color name="errorColor">#d24135</color>
+    <color name="warningColor">#ff8800</color>
+    <color name="infoColor">#0099cc</color>
+    <color name="alertColor">#e34220</color>
+
+</resources>

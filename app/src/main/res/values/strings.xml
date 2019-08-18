@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">DPAKit</string>
+
+    <string name="messOperationSucceed">عملیات با موفقیت انجام شد</string>
+    <string name="messPleaseWait">لطفا منتظر بمانید</string>
+    <string name="messPleaseGetPermission">لطفا اجازه دسترسی به حافظه را بدهید</string>
+    <string name="messBuyText">خرید شما به شرح زیر می باشد</string>
+    <string name="messOperationFailedOnBuy">بروز خطا در انجام تراکنش</string>
+    <string name="messBuySucceed">پرداخت با موفقیت انجام شد</string>
+
+    <string name="lblConfirm">تایید</string>
+    <string name="lblCancel">انصراف</string>
+    <string name="lblYes">بلی</string>
+    <string name="lblNo">خیر</string>
+    <string name="lblGallry">گالری</string>
+    <string name="lblCamera">دوربین</string>
+    <string name="lblDelete">حذف تصویر</string>
+    <string name="lblPay">پرداخت</string>
+    <string name="lblToman">تومان</string>
+    <string name="lblDesc">توضیحات</string>
+    <string name="lblBuyDate">تاریخ خرید</string>
+    <string name="lblBuyPrice">مبلغ</string>
+    <string name="lblRefCode">کد رهگیری</string>
+    <string name="lblGotoBank">ورود به صفحه پرداخت</string>
+</resources>

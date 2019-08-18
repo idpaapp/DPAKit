@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/MainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transBackColor">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="140sp"
+        android:layout_height="140sp"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/colorBackground"
+        app:cardCornerRadius="8sp"
+        app:cardElevation="4sp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp">
+
+            <com.pnikosis.materialishprogress.ProgressWheel
+                android:id="@+id/pd_prw_wheel"
+                android:layout_width="90sp"
+                android:layout_height="90sp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5sp"
+                app:matProg_barColor="@color/colorPrimary"
+                app:matProg_barWidth="4sp"
+                app:matProg_fillRadius="true"
+                app:matProg_progressIndeterminate="true"
+                app:matProg_rimWidth="4sp"/>
+
+            <TextView
+                android:id="@+id/pd_txt_message"
+                android:layout_width="90sp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/pd_prw_wheel"
+                android:layout_marginTop="5sp"
+                android:gravity="center"
+                android:text="@string/messPleaseWait"
+                android:textColor="@color/primary_text"
+                android:textSize="13sp"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

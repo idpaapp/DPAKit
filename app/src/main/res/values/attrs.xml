@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PriceRateView">
+        <attr name="prv_TextSize" format="integer"/>
+        <attr name="prv_SelectedColor" format="color"/>
+        <attr name="prv_UnSelectedColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="MyCheckBox">
+        <attr name="txtcaption" format="string"/>
+        <attr name="txttextSize" format="integer"/>
+        <attr name="txttextColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="MyRadioGroup">
+        <attr name="caption" format="string"/>
+        <attr name="mrgtextSize" format="integer"/>
+        <attr name="textColor" format="color"/>
+        <attr name="captionColor" format="color"/>
+        <attr name="radioCount" format="integer"/>
+        <attr name="hasCaption" format="boolean"/>
+        <attr name="groupBackground" format="reference"/>
+        <attr name="groupOrientation" format="integer">
+            <flag name="horizontal" value="0"/>
+            <flag name="vertical" value="1"/>
+        </attr>
+        <attr name="captionPostion" format="integer">
+            <flag name="inside" value="0"/>
+            <flag name="outside" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>
