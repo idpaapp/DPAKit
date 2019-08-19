@@ -1041,6 +1041,12 @@ public class HandleUnit {
             }
         }
 
+        public static void handleGetApiError(Activity activity, View.OnClickListener onClickListener) {
+            CloseProgressDialog();
+            SnackMessage(activity, activity.getString(R.string.messOperationFailed),
+                    activity.getString(R.string.lblRetry), onClickListener);
+        }
+
         public static Context SetActivityParams(final Activity activity, int ActivityLayout,
                                                 boolean HasDrawerLayout, String Title, boolean HideStatusBar) {
             Thread.setDefaultUncaughtExceptionHandler (new Thread.UncaughtExceptionHandler()
