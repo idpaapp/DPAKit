@@ -571,6 +571,19 @@ public class HandleUnit {
     }
 
     public static class HandleString {
+        public static String CreateInputJSON(String[] tokenList, String[] valueList) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                for (int i = 0; i < tokenList.length; i++) {
+                    jsonObject.put(tokenList[i], PersianNumStrToEnglish(valueList[i]));
+                }
+
+                return jsonObject.toString();
+            } catch (Exception ex) {
+                return "";
+            }
+        }
+
         public static String implode(String separator, ArrayList<String> data) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < data.size() - 1; i++) {
