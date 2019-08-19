@@ -60,6 +60,11 @@ public class MessageDialog extends Dialog {
         return this;
     }
 
+    public MessageDialog setMessageType(int messageType) {
+        this.messageType = messageType;
+        return this;
+    }
+
     public MessageDialog setBtnCaption(String btnCaption) {
         okKeyCaption = btnCaption;
         return this;
