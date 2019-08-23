@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/isi_txt_caption"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginRight="5sp"
+        android:layout_toLeftOf="@+id/isi_img_image"
+        android:gravity="right|center"
+        android:textColor="@color/primary_text"
+        android:textSize="13sp"/>
+
+    <ImageView
+        android:id="@+id/isi_img_image"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:layout_alignParentRight="true"
+        android:padding="6sp"/>
+
+</RelativeLayout>
