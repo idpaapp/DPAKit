@@ -157,6 +157,7 @@ public class SimpleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 Glide.with(mActivity)
                         .load(mActivity.getResources().getDrawable(GetResourceID(mActivity, info.getDrawable(), "drawable")))
                         .into(isi_img_image);
+
                 isi_img_image.setVisibility(View.VISIBLE);
             } else isi_img_image.setVisibility(View.GONE);
 

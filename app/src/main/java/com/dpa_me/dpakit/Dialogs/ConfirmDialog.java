@@ -25,6 +25,7 @@ public class ConfirmDialog extends Dialog {
     private String mMessage;
     private String mYes;
     private String mNo;
+    private Context mContext;
     private AppCompatTextView qdTxtMessage;
     private AppCompatTextView qdBtnNo;
     private AppCompatTextView qdBtnYes;
@@ -34,6 +35,7 @@ public class ConfirmDialog extends Dialog {
         super(context);
         mYes = getContext().getString(R.string.lblYes);
         mNo = getContext().getString(R.string.lblNo);
+        mContext = context;
     }
 
     public ConfirmDialog(@NonNull Context context, String message) {
@@ -41,20 +43,22 @@ public class ConfirmDialog extends Dialog {
         mYes = getContext().getString(R.string.lblYes);
         mNo = getContext().getString(R.string.lblNo);
         this.mMessage = message;
+        mContext = context;
     }
 
     public ConfirmDialog(@NonNull Context context, int message) {
         super(context);
         mYes = getContext().getString(R.string.lblYes);
         mNo = getContext().getString(R.string.lblNo);
-        this.mMessage = getContext().getString(message);
+        this.mMessage = context.getString(message);
+        mContext = context;
     }
 
     private void initView() {
-        qdTxtMessage = (AppCompatTextView) findViewById(R.id.qd_txt_message);
-        qdBtnNo = (AppCompatTextView) findViewById(R.id.qd_btn_no);
-        qdBtnYes = (AppCompatTextView) findViewById(R.id.qd_btn_yes);
-        qdImgLogo = (AppCompatImageView) findViewById(R.id.qd_img_logo);
+        qdTxtMessage = findViewById(R.id.qd_txt_message);
+        qdBtnNo = findViewById(R.id.qd_btn_no);
+        qdBtnYes = findViewById(R.id.qd_btn_yes);
+        qdImgLogo = findViewById(R.id.qd_img_logo);
     }
 
     public interface IOpration {
@@ -91,7 +95,7 @@ public class ConfirmDialog extends Dialog {
     }
 
     public ConfirmDialog setMessage(int message) {
-        this.mMessage = getContext().getString(message);
+        this.mMessage = mContext.getString(message);
         return this;
     }
 
