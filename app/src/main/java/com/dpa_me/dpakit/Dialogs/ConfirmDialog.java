@@ -117,6 +117,10 @@ public class ConfirmDialog extends Dialog {
         setCancelable(false);
         initView();
 
+        qdTxtMessage.setText(mMessage);
+        qdBtnYes.setText(mYes);
+        qdBtnNo.setText(mNo);
+
         qdBtnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
