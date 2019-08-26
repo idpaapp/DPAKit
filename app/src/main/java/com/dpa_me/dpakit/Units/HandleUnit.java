@@ -71,6 +71,8 @@ package com.dpa_me.dpakit.Units;
         import com.google.android.material.snackbar.Snackbar;
         import com.squareup.picasso.Picasso;
 
+        import net.glxn.qrgen.android.QRCode;
+
         import org.apache.http.HttpEntity;
         import org.apache.http.HttpResponse;
         import org.apache.http.NameValuePair;
@@ -388,7 +390,7 @@ public class HandleUnit {
                 InputStream is = ucon.getInputStream();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 byte[] buffer = new byte[1024];
-                int read = 0;
+                int read;
                 while ((read = is.read(buffer, 0, buffer.length)) != -1) {
                     baos.write(buffer, 0, read);
                 }
@@ -429,7 +431,7 @@ public class HandleUnit {
                 InputStream input = connection.getInputStream();
                 connection.connect();
                 x = BitmapFactory.decodeStream(input);
-                return new BitmapDrawable(x);
+                return new BitmapDrawable(mContext.getResources(), x);
             } catch (Exception e) {
                 e.printStackTrace();
                 return mContext.getResources().getDrawable(R.drawable.ic_launcher);
@@ -460,8 +462,7 @@ public class HandleUnit {
         public static byte[] BitmapToByte(Bitmap bitmap) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            return byteArray;
+            return stream.toByteArray();
         }
 
         public static byte[] DrawableToByte(Drawable drawable) {
@@ -528,7 +529,6 @@ public class HandleUnit {
         }
 
         public static String SaveBitmapToFile(Context mContext, Bitmap bmp, String FileName) {
-            OutputStream fOut = null;
             String PicUri = "";
             try {
                 if (LocalPath == null)
@@ -536,17 +536,14 @@ public class HandleUnit {
                 String PicURL = FileName + ".jpg";
                 File to = new File(LocalPath, FileName + ".jpg");
                 PicUri = to.getPath();
-                fOut = new FileOutputStream(to);
-            } catch (Exception e) {
-                Toast.makeText(mContext, "Error occured. Please try again later.",
-                        Toast.LENGTH_SHORT).show();
-            }
+                OutputStream fOut = new FileOutputStream(to);
 
-            try {
                 bmp.compress(Bitmap.CompressFormat.JPEG, 50, fOut);
                 fOut.flush();
                 fOut.close();
             } catch (Exception e) {
+                Toast.makeText(mContext, "Error occured. Please try again later.",
+                        Toast.LENGTH_SHORT).show();
             }
 
             return PicUri;
@@ -564,10 +561,16 @@ public class HandleUnit {
         }
 
         public static Bitmap LoadImageFromURL(URL url) throws IOException {
-            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            return bmp;
+            return BitmapFactory.decodeStream(url.openConnection().getInputStream());
         }
 
+        public static Bitmap GenerateQRCode(String txt){
+            return QRCode.from(txt).withColor(0xFFFF0000, 0xFFFFFFAA).bitmap();
+        }
+
+        public static Bitmap GenerateQRCode(String txt, int onColor, int offColor){
+            return QRCode.from(txt).withColor(onColor, offColor).bitmap();
+        }
     }
 
     public static class HandleString {
@@ -835,7 +838,7 @@ public class HandleUnit {
             try {
                 PackageInfo p = m.getPackageInfo(s, 0);
                 LocalPath = p.applicationInfo.dataDir;
-            } catch (PackageManager.NameNotFoundException e) {
+            } catch (PackageManager.NameNotFoundException ignored) {
             }
         }
 
@@ -870,10 +873,7 @@ public class HandleUnit {
 
         public static boolean isLanguageEn(String string) {
             String pattern = "^[A-Za-z0-9. ]+$";
-            if (string.matches(pattern))
-                return true;
-            else
-                return false;
+            return string.matches(pattern);
         }
 
         public static void SavePreferences(Context mcContext, String key, String value) {
@@ -1109,7 +1109,7 @@ public class HandleUnit {
                     mProgressDialog = new ProgressDialog(activity, activity.getResources().getString(R.string.messPleaseWait));
                     mProgressDialog.setCancelable(false);
                     mProgressDialog.show();
-                } catch (Exception ex) {
+                } catch (Exception ignored) {
 
                 }
             }
@@ -1123,9 +1123,8 @@ public class HandleUnit {
 
         public static int GetResourceID(Context mContext, String ResourceName, String ResType) {
             Resources resources = mContext.getResources();
-            final int resourceId = resources.getIdentifier(ResourceName, ResType,
+            return resources.getIdentifier(ResourceName, ResType,
                     mContext.getPackageName());
-            return resourceId;
         }
 
         public static String GetResourceName(Context mContext, int ResourceID) {
@@ -1145,7 +1144,7 @@ public class HandleUnit {
                 } else if (v instanceof TextView) {
                     ((TextView) v).setTypeface(Typeface.createFromAsset(context.getAssets(), "BTrafcBd.ttf"));
                 }
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
 
@@ -1160,7 +1159,7 @@ public class HandleUnit {
                 } else if (v instanceof TextView) {
                     ((TextView) v).setTypeface(Typeface.createFromAsset(context.getAssets(), fontName));
                 }
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
 
@@ -1219,16 +1218,14 @@ public class HandleUnit {
 
         public static void ExportDB(Context mContext, String db_name) {
             HandleApplication.SetLocalPath(mContext);
-            FileChannel source = null;
-            FileChannel destination = null;
             String currentDBPath = LocalPath + "/databases/" + db_name;
             String backupDBPath = Environment.getExternalStorageDirectory() + "/fitnessica.db3";
 
             File currentDB = new File(currentDBPath);
             File backupDB = new File(backupDBPath);
             try {
-                source = new FileInputStream(currentDB).getChannel();
-                destination = new FileOutputStream(backupDB).getChannel();
+                FileChannel source = new FileInputStream(currentDB).getChannel();
+                FileChannel destination = new FileOutputStream(backupDB).getChannel();
                 destination.transferFrom(source, 0, source.size());
                 source.close();
                 destination.close();
@@ -1239,8 +1236,6 @@ public class HandleUnit {
 
         public static void ImportDB(Context mContext, String db_name) {
             HandleApplication.SetLocalPath(mContext);
-            FileChannel source = null;
-            FileChannel destination = null;
             String currentDBPath = LocalPath + "/databases/" + db_name;
             String backupDBPath = Environment.getExternalStorageDirectory() + "/fitnessica.db3";
 
@@ -1248,8 +1243,8 @@ public class HandleUnit {
             File backupDB = new File(backupDBPath);
 
             try {
-                source = new FileInputStream(backupDB).getChannel();
-                destination = new FileOutputStream(currentDB).getChannel();
+                FileChannel source = new FileInputStream(backupDB).getChannel();
+                FileChannel destination = new FileOutputStream(currentDB).getChannel();
                 destination.transferFrom(source, 0, source.size());
                 source.close();
                 destination.close();
