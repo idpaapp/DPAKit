@@ -571,6 +571,15 @@ public class HandleUnit {
         public static Bitmap GenerateQRCode(String txt, int onColor, int offColor){
             return QRCode.from(txt).withColor(onColor, offColor).bitmap();
         }
+
+        public static void ShareLink(Activity activity,  String subject, String body){
+            Intent share = new Intent(Intent.ACTION_SEND);
+            share.setType("text/plain");
+            share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            share.putExtra(Intent.EXTRA_SUBJECT, subject);
+            share.putExtra(Intent.EXTRA_TEXT, body);
+            activity.startActivity(Intent.createChooser(share, "اشتراک گذاری"));
+        }
     }
 
     public static class HandleString {
