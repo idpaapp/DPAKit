@@ -565,7 +565,7 @@ public class HandleUnit {
         }
 
         public static Bitmap GenerateQRCode(String txt){
-            return QRCode.from(txt).withColor(0xFFFF0000, 0xFFFFFFAA).bitmap();
+            return QRCode.from(txt).withColor(0xFF000000, 0xFFFFFFFF).bitmap();
         }
 
         public static Bitmap GenerateQRCode(String txt, int onColor, int offColor){
