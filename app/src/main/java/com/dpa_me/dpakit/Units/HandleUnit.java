@@ -1104,6 +1104,39 @@ public class HandleUnit {
             return activity;
         }
 
+        public static Context SetActivityParams(final Activity activity, int ActivityLayout,
+                                                boolean HasDrawerLayout) {
+            Thread.setDefaultUncaughtExceptionHandler (new Thread.UncaughtExceptionHandler()
+            {
+                @Override
+                public void uncaughtException (Thread thread, Throwable e)
+                {
+                    handleUncaughtException (activity, thread, e);
+                }
+            });
+
+            activity.setContentView(ActivityLayout);
+            activity.setTitle("");
+            DisplayMetrics metrics = new DisplayMetrics();
+            activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+            xdpi = metrics.widthPixels;
+            ydpi = metrics.heightPixels;
+            DisplayDensityDpi = metrics.density;
+
+            ImageView BackBtn = activity.findViewById(R.id.BackBtn);
+            if (BackBtn != null) {
+                BackBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        activity.finish();
+                    }
+                });
+            }
+
+            return activity;
+        }
+
         public static View FindViewByName(Context context, String ViewName, View Parent) {
             int id = context.getResources().getIdentifier(ViewName, "id", context.getPackageName());
             return Parent.findViewById(id);
