@@ -64,9 +64,8 @@ public class CameraOrGallryDialog extends Dialog {
 
     protected void onCreate(Bundle savedInstanceState) {
         LockOpr = false;
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.cameraorgallerylayout);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setCancelable(false);
