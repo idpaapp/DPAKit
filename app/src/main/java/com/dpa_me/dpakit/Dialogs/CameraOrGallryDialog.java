@@ -63,16 +63,13 @@ public class CameraOrGallryDialog extends Dialog {
     }
 
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         LockOpr = false;
-        setContentView(R.layout.cameraorgallerylayout);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.cameraorgallerylayout);
         getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setCancelable(false);
-
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         imgTakeCam = findViewById(R.id.imgTakeCam);
         imgTakeGallery = findViewById(R.id.imgTakeGallery);
