@@ -1,7 +1,10 @@
 package com.dpa_me.dpakit.Dialogs;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,23 +14,30 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+
 import com.dpa_me.dpakit.R;
 import com.dpa_me.dpakit.Activitys.CameraTempActivity;
 
 import static com.dpa_me.dpakit.Units.HandleUnit.HandleApplication.CreateRandomNumber;
 
-public class CameraOrGallryDialog extends DialogFragment  {
+public class CameraOrGallryDialog extends Dialog {
 
-    public Context mContext;
+    private Activity mContext;
     private Uri picUri;
-    LinearLayout imgTakeCam;
-    LinearLayout imgTakeTrash;
-    LinearLayout imgTakeGallery;
-    boolean mHasDelete = false;
-    int mX, mY;
+    private LinearLayout imgTakeCam;
+    private LinearLayout imgTakeTrash;
+    private LinearLayout imgTakeGallery;
+    private boolean mHasDelete = false;
+    private int mX, mY;
     private boolean LockOpr;
 
     String mFileName = "temporary_holder";
+
+    public CameraOrGallryDialog(@NonNull Activity context) {
+        super(context);
+        mContext = context;
+    }
 
     public interface IOprationDone{
         void onPictureTaken(Uri imageUri);
@@ -52,18 +62,22 @@ public class CameraOrGallryDialog extends DialogFragment  {
         return this;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle args) {
+    protected void onCreate(Bundle savedInstanceState) {
         LockOpr = false;
-        mContext = getActivity();
-        View view = inflater.inflate(R.layout.cameraorgallerylayout, container, false);
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        getDialog().getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-        imgTakeCam = view.findViewById(R.id.imgTakeCam);
-        imgTakeGallery = view.findViewById(R.id.imgTakeGallery);
-        imgTakeTrash = view.findViewById(R.id.imgTakeTrash);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.cameraorgallerylayout);
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        setCancelable(false);
+
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        imgTakeCam = findViewById(R.id.imgTakeCam);
+        imgTakeGallery = findViewById(R.id.imgTakeGallery);
+        imgTakeTrash = findViewById(R.id.imgTakeTrash);
 
         if (mHasDelete) imgTakeTrash.setVisibility(View.VISIBLE);
 
@@ -71,7 +85,7 @@ public class CameraOrGallryDialog extends DialogFragment  {
             @Override
             public void onClick(View v) {
                 camera();
-                dismissAllowingStateLoss();
+                dismiss();
             }
         });
 
@@ -79,7 +93,7 @@ public class CameraOrGallryDialog extends DialogFragment  {
             @Override
             public void onClick(View v) {
                 gallery();
-                dismissAllowingStateLoss();
+                dismiss();
             }
         });
         imgTakeTrash.setOnClickListener(new View.OnClickListener() {
@@ -87,17 +101,16 @@ public class CameraOrGallryDialog extends DialogFragment  {
             public void onClick(View v) {
                 if (onOprationDone != null)
                     onOprationDone.onPictureDelete();
-                dismissAllowingStateLoss();
+                dismiss();
             }
         });
-
-        return view;
     }
+
 
     private void gallery() {
         if (!LockOpr) {
             LockOpr = true;
-            new CameraTempActivity.PickerBuilder(getActivity(), CameraTempActivity.PickerBuilder.SELECT_FROM_GALLERY)
+            new CameraTempActivity.PickerBuilder(mContext, CameraTempActivity.PickerBuilder.SELECT_FROM_GALLERY)
                     .setOnImageReceivedListener(new CameraTempActivity.PickerBuilder.onImageReceivedListener() {
                         @Override
                         public void onImageReceived(Uri imageUri) {
@@ -105,11 +118,11 @@ public class CameraOrGallryDialog extends DialogFragment  {
 
                             if (onOprationDone != null)
                                 onOprationDone.onPictureTaken(imageUri);
-                            dismissAllowingStateLoss();
+                            dismiss();
                         }
                     })
                     .setMaxCropSize(mX, mY)
-                    .setImageName(getString(R.string.app_name) + CreateRandomNumber())
+                    .setImageName(mContext.getString(R.string.app_name) + CreateRandomNumber())
                     .start();
             LockOpr = false;
         }
@@ -118,7 +131,7 @@ public class CameraOrGallryDialog extends DialogFragment  {
     private void camera() {
         if (!LockOpr) {
             LockOpr = true;
-            new CameraTempActivity.PickerBuilder(getActivity(), CameraTempActivity.PickerBuilder.SELECT_FROM_CAMERA)
+            new CameraTempActivity.PickerBuilder(mContext, CameraTempActivity.PickerBuilder.SELECT_FROM_CAMERA)
                     .setOnImageReceivedListener(new CameraTempActivity.PickerBuilder.onImageReceivedListener() {
                         @Override
                         public void onImageReceived(Uri imageUri) {
@@ -126,21 +139,14 @@ public class CameraOrGallryDialog extends DialogFragment  {
 
                             if (onOprationDone != null)
                                 onOprationDone.onPictureTaken(imageUri);
-                            dismissAllowingStateLoss();
+                            dismiss();
                         }
                     })
 
                     .setMaxCropSize(mX, mY)
-                    .setImageName(getString(R.string.app_name) + CreateRandomNumber())
+                    .setImageName(mContext.getString(R.string.app_name) + CreateRandomNumber())
                     .start();
             LockOpr = false;
         }
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-    }
-
-
-
 }

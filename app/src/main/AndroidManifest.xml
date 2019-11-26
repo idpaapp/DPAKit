@@ -17,6 +17,19 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon"
-        tools:ignore="GoogleAppIndexingWarning" />
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <activity
+            android:name=".Activitys.BuyDescriptionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".Activitys.CameraTempActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+    </application>
+
+
 
 </manifest>
