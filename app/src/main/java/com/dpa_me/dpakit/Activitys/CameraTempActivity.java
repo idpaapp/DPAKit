@@ -355,7 +355,7 @@ public class CameraTempActivity extends AppCompatActivity {
                 uCrop = uCrop.withOptions(options);
             }
 
-            uCrop.start(activity);
+            uCrop.start((AppCompatActivity) activity);
         }
 
         public void handleCropResult(Intent data) {

@@ -79,6 +79,7 @@
                 android:layout_width="200sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <LinearLayout
