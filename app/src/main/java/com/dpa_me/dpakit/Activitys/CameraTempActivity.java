@@ -18,18 +18,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.dpa_me.dpakit.R;
-import com.dpa_me.dpakit.Units.HandleUnit;
 import com.google.android.material.snackbar.Snackbar;
+import com.marcinorlowski.fonty.Fonty;
 import com.yalantis.ucrop.UCrop;
-
 
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 
-
-import static com.dpa_me.dpakit.Units.HandleUnit.HandleViewAndFontSize.overrideFonts;
 import static com.yalantis.ucrop.UCrop.REQUEST_CROP;
 
 public class CameraTempActivity extends AppCompatActivity {
@@ -47,6 +44,12 @@ public class CameraTempActivity extends AppCompatActivity {
         this.pickerManager = GlobalHolder.getInstance().getPickerManager();
         this.pickerManager.setActivity(CameraTempActivity.this);
         this.pickerManager.pickPhotoWithPermission();
+
+        Fonty.context(CameraTempActivity.this)
+                .normalTypeface("font.ttf")
+                .italicTypeface("font.ttf")
+                .boldTypeface("font.ttf")
+                .build();
     }
 
     @Override
@@ -186,16 +189,6 @@ public class CameraTempActivity extends AppCompatActivity {
             pickerManager.mTitle = header;
             return this;
         }
-
-        public PickerBuilder setHeaderColor(int color) {
-            pickerManager.mHeaderColor = color;
-            return this;
-        }
-
-        public PickerBuilder setTextColor(int color) {
-            pickerManager.mTextColor = color;
-            return this;
-        }
     }
 
     public static class CameraPickerManager extends PickerManager {
@@ -247,8 +240,6 @@ public class CameraTempActivity extends AppCompatActivity {
         private int mX;
         private int mY;
         private String mTitle = "";
-        private int mHeaderColor = 0;
-        private int mTextColor = 0;
         protected Activity activity;
         private UCrop uCrop;
         protected PickerBuilder.onImageReceivedListener imageReceivedListener;
@@ -279,7 +270,6 @@ public class CameraTempActivity extends AppCompatActivity {
                     ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) !=
                             PackageManager.PERMISSION_GRANTED) {
 
-                overrideFonts(activity, activity.findViewById(android.R.id.content));
                 Snackbar.make(activity.findViewById(android.R.id.content),
                         activity.getString(R.string.messPleaseGetPermission),
                         Snackbar.LENGTH_INDEFINITE).setAction("تایید دسترسی",
@@ -320,7 +310,7 @@ public class CameraTempActivity extends AppCompatActivity {
         protected Uri getImageFile() {
             String imagePathDownLoad = Environment.getExternalStorageDirectory() + "/" +
                     (folder == null ?
-                            Environment.DIRECTORY_DOWNLOADS :folder);
+                            Environment.DIRECTORY_DOWNLOADS : folder);
 
             File pathDownload = new File(imagePathDownLoad);
             if (!pathDownload.exists()) {
@@ -367,14 +357,11 @@ public class CameraTempActivity extends AppCompatActivity {
                 uCrop = uCrop.withMaxResultSize(mX, mY);
                 UCrop.Options options = new UCrop.Options();
 
-                mHeaderColor = mHeaderColor == 0 ? activity.getResources().getColor(R.color.colorPrimaryDark) : mHeaderColor;
-                mTextColor = mTextColor == 0 ? activity.getResources().getColor(R.color.light_text) : mTextColor;
-
                 options.setHideBottomControls(true);
-                options.setLogoColor(mTextColor);
-                options.setToolbarColor(mHeaderColor);
-                options.setStatusBarColor(mHeaderColor);
-                options.setActiveWidgetColor(mHeaderColor);
+                options.setLogoColor(activity.getResources().getColor(R.color.light_text));
+                options.setToolbarColor(activity.getResources().getColor(R.color.primary_text));
+                options.setStatusBarColor(activity.getResources().getColor(R.color.primary_text));
+                options.setActiveWidgetColor(activity.getResources().getColor(R.color.primary_text));
                 options.setToolbarTitle(mTitle.equals("") ? "برش تصویر" : mTitle);
                 uCrop = uCrop.withOptions(options);
             }

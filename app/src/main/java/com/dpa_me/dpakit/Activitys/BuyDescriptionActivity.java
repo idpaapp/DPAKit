@@ -18,6 +18,7 @@ import com.dpa_me.dpakit.Units.HandleUnit;
 import com.dpa_me.dpakit.ZarinPal.OnCallbackVerificationPaymentListener;
 import com.dpa_me.dpakit.ZarinPal.PaymentRequest;
 import com.dpa_me.dpakit.ZarinPal.ZarinPal;
+import com.marcinorlowski.fonty.Fonty;
 
 import static com.dpa_me.dpakit.Units.HandleUnit.HandleApplication.SetActivityParams;
 import static com.dpa_me.dpakit.Units.HandleUnit.HandleApplication.ShowProgressDialog;
@@ -84,6 +85,12 @@ public class BuyDescriptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SetActivityParams(this, R.layout.activity_buy_description, false, "", false);
+
+        Fonty.context(this)
+                .normalTypeface("font.ttf")
+                .italicTypeface("font.ttf")
+                .boldTypeface("font.ttf")
+                .build();
 
         initViews();
         getZarrinResponse();
