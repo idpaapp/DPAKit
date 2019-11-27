@@ -31,6 +31,9 @@ public class CameraOrGallryDialog extends Dialog {
     private boolean mHasDelete = false;
     private int mX, mY;
     private boolean LockOpr;
+    private String mTitle = "";
+    private int mHeaderColor = 0;
+    private int mTextColor = 0;
 
     String mFileName = "temporary_holder";
 
@@ -59,6 +62,21 @@ public class CameraOrGallryDialog extends Dialog {
     public CameraOrGallryDialog setXY(int x, int y){
         this.mX = x;
         this.mY = y;
+        return this;
+    }
+
+    public CameraOrGallryDialog setHeader(String header) {
+        mTitle = header;
+        return this;
+    }
+
+    public CameraOrGallryDialog setHeaderColor(int color) {
+        mHeaderColor = color;
+        return this;
+    }
+
+    public CameraOrGallryDialog setTextColor(int color) {
+        mTextColor = color;
         return this;
     }
 
@@ -118,6 +136,9 @@ public class CameraOrGallryDialog extends Dialog {
                         }
                     })
                     .setMaxCropSize(mX, mY)
+                    .setHeader(mTitle)
+                    .setHeaderColor(mHeaderColor)
+                    .setTextColor(mTextColor)
                     .setImageName(mContext.getString(R.string.app_name) + CreateRandomNumber())
                     .start();
             LockOpr = false;
@@ -138,7 +159,9 @@ public class CameraOrGallryDialog extends Dialog {
                             dismiss();
                         }
                     })
-
+                    .setHeader(mTitle)
+                    .setHeaderColor(mHeaderColor)
+                    .setTextColor(mTextColor)
                     .setMaxCropSize(mX, mY)
                     .setImageName(mContext.getString(R.string.app_name) + CreateRandomNumber())
                     .start();

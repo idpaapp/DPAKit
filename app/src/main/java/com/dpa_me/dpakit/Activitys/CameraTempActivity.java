@@ -180,6 +180,21 @@ public class CameraTempActivity extends AppCompatActivity {
             pickerManager.setMaxCropSize(x, y);
             return this;
         }
+
+        public PickerBuilder setHeader(String header) {
+            pickerManager.mTitle = header;
+            return this;
+        }
+
+        public PickerBuilder setHeaderColor(int color) {
+            pickerManager.mHeaderColor = color;
+            return this;
+        }
+
+        public PickerBuilder setTextColor(int color) {
+            pickerManager.mTextColor = color;
+            return this;
+        }
     }
 
     public static class CameraPickerManager extends PickerManager {
@@ -230,6 +245,9 @@ public class CameraTempActivity extends AppCompatActivity {
         private String imageName;
         private int mX;
         private int mY;
+        private String mTitle = "";
+        private int mHeaderColor = 0;
+        private int mTextColor = 0;
         protected Activity activity;
         private UCrop uCrop;
         protected PickerBuilder.onImageReceivedListener imageReceivedListener;
@@ -346,12 +364,16 @@ public class CameraTempActivity extends AppCompatActivity {
                 uCrop = uCrop.withAspectRatio(mX, mY);
                 uCrop = uCrop.withMaxResultSize(mX, mY);
                 UCrop.Options options = new UCrop.Options();
+
+                mHeaderColor = mHeaderColor == 0 ? activity.getResources().getColor(R.color.colorPrimaryDark) : mHeaderColor;
+                mTextColor = mTextColor == 0 ? activity.getResources().getColor(R.color.light_text) : mTextColor;
+
                 options.setHideBottomControls(true);
-                options.setLogoColor(activity.getResources().getColor(R.color.primary_text));
-                options.setToolbarColor(activity.getResources().getColor(R.color.colorPrimaryDark));
-                options.setStatusBarColor(activity.getResources().getColor(R.color.colorPrimaryDark));
-                options.setActiveWidgetColor(activity.getResources().getColor(R.color.colorPrimaryDark));
-                options.setToolbarTitle("برش تصویر");
+                options.setLogoColor(mTextColor);
+                options.setToolbarColor(mHeaderColor);
+                options.setStatusBarColor(mHeaderColor);
+                options.setActiveWidgetColor(mHeaderColor);
+                options.setToolbarTitle(mTitle.equals("") ? "برش تصویر" : mTitle);
                 uCrop = uCrop.withOptions(options);
             }
 
