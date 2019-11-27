@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.dpa_me.dpakit.R;
+import com.dpa_me.dpakit.Units.HandleUnit;
 import com.google.android.material.snackbar.Snackbar;
 import com.yalantis.ucrop.UCrop;
 
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 
 
+import static com.dpa_me.dpakit.Units.HandleUnit.HandleViewAndFontSize.overrideFonts;
 import static com.yalantis.ucrop.UCrop.REQUEST_CROP;
 
 public class CameraTempActivity extends AppCompatActivity {
@@ -45,7 +47,6 @@ public class CameraTempActivity extends AppCompatActivity {
         this.pickerManager = GlobalHolder.getInstance().getPickerManager();
         this.pickerManager.setActivity(CameraTempActivity.this);
         this.pickerManager.pickPhotoWithPermission();
-
     }
 
     @Override
@@ -278,6 +279,7 @@ public class CameraTempActivity extends AppCompatActivity {
                     ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) !=
                             PackageManager.PERMISSION_GRANTED) {
 
+                overrideFonts(activity, activity.findViewById(android.R.id.content));
                 Snackbar.make(activity.findViewById(android.R.id.content),
                         activity.getString(R.string.messPleaseGetPermission),
                         Snackbar.LENGTH_INDEFINITE).setAction("تایید دسترسی",
