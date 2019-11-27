@@ -86,12 +86,6 @@ public class BuyDescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SetActivityParams(this, R.layout.activity_buy_description, false, "", false);
 
-        Fonty.context(this)
-                .normalTypeface("font.ttf")
-                .italicTypeface("font.ttf")
-                .boldTypeface("font.ttf")
-                .build();
-
         initViews();
         getZarrinResponse();
     }

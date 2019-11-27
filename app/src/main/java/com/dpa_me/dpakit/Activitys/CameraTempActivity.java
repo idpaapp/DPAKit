@@ -44,12 +44,6 @@ public class CameraTempActivity extends AppCompatActivity {
         this.pickerManager = GlobalHolder.getInstance().getPickerManager();
         this.pickerManager.setActivity(CameraTempActivity.this);
         this.pickerManager.pickPhotoWithPermission();
-
-        Fonty.context(CameraTempActivity.this)
-                .normalTypeface("font.ttf")
-                .italicTypeface("font.ttf")
-                .boldTypeface("font.ttf")
-                .build();
     }
 
     @Override
