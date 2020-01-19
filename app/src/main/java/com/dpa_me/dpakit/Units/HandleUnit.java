@@ -1058,14 +1058,14 @@ public class HandleUnit {
 
         public static Context SetActivityParams(final Activity activity, int ActivityLayout,
                                                 boolean HasDrawerLayout, String Title, boolean HideStatusBar) {
-            Thread.setDefaultUncaughtExceptionHandler (new Thread.UncaughtExceptionHandler()
+            /*Thread.setDefaultUncaughtExceptionHandler (new Thread.UncaughtExceptionHandler()
             {
                 @Override
                 public void uncaughtException (Thread thread, Throwable e)
                 {
                     handleUncaughtException (activity, thread, e);
                 }
-            });
+            });*/
 
             activity.setContentView(ActivityLayout);
             activity.setTitle("");
