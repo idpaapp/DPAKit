@@ -24,4 +24,5 @@
     <string name="lblRefCode">کد رهگیری</string>
     <string name="lblGotoBank">ورود به صفحه پرداخت</string>
     <string name="lblRetry">تلاش مجدد</string>
+    <string name="messEnterPinCode">رمز عبور خود را وارد نمایید</string>
 </resources>

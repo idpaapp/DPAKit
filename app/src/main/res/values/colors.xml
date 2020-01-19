@@ -20,5 +20,6 @@
     <color name="warningColor">#ff8800</color>
     <color name="infoColor">#0099cc</color>
     <color name="alertColor">#e34220</color>
+    <color name="pinColor">#3F51B5</color>
 
 </resources>
