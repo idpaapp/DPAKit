@@ -12,10 +12,7 @@
         android:layout_height="140sp"
         android:layout_centerInParent="true"
         app:cardBackgroundColor="@color/colorBackground"
-        app:cardCornerRadius="8sp"
-        app:cardElevation="4sp"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="true">
+        app:cardCornerRadius="8sp">
 
         <RelativeLayout
             android:layout_width="match_parent"
