@@ -2,6 +2,8 @@ package com.dpa_me.dpakit.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -16,13 +18,13 @@ public class ProgressDialog extends Dialog {
     private Activity activity;
 
     public ProgressDialog(Activity activity, String Message) {
-        super(activity, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        super(activity);
         this.activity = activity;
         mMessage = Message;
     }
 
     public ProgressDialog(Activity activity) {
-        super(activity, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        super(activity);
         this.activity = activity;
         mMessage = "";
     }
@@ -33,7 +35,9 @@ public class ProgressDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.progressdialog);
-        getWindow().setBackgroundDrawableResource(R.color.transBackColor);
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        setCancelable(false);
 
         TextView txtMessage = findViewById(R.id.pd_txt_message);
         if (mMessage.equals(""))
