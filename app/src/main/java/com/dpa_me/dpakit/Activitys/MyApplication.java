@@ -6,9 +6,11 @@ import android.os.Build;
 import android.util.Log;
 import android.util.LongSparseArray;
 
+import androidx.multidex.MultiDexApplication;
+
 import java.lang.reflect.Field;
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
 
     private static final String DEFAULT_NORMAL_BOLD_FONT_FILENAME = "BTrafcBd.ttf";
     private static final String DEFAULT_NORMAL_BOLD_ITALIC_FONT_FILENAME = "BTrafcBd.ttf";

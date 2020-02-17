@@ -9,6 +9,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
+        multiDexEnabled true
         versionName "1.0"
         buildConfigField "long", "TS", System.currentTimeMillis() + "L"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -31,7 +32,8 @@ dependencies {
     implementation 'com.intuit.ssp:ssp-android:1.0.5'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation "com.google.android.material:material:1.2.0-alpha02"
+    implementation "androidx.multidex:multidex:2.0.1"
+    implementation "com.google.android.material:material:1.2.0-alpha04"
     implementation 'com.github.yalantis:ucrop:2.2.4'
     implementation 'com.pnikosis:materialish-progress:1.7'
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
