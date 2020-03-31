@@ -22,6 +22,7 @@ package com.dpa_me.dpakit.Units;
         import android.graphics.Typeface;
         import android.graphics.drawable.BitmapDrawable;
         import android.graphics.drawable.Drawable;
+        import android.media.MediaPlayer;
         import android.net.Uri;
         import android.os.AsyncTask;
         import android.os.Build;
@@ -1340,5 +1341,73 @@ public class HandleUnit {
         public static boolean isCurEmpty(Cursor cur) {
             return !(cur.moveToFirst()) || cur.getCount() == 0;
         }
+    }
+
+    public static class HandleSounds {
+        public enum SoundState {
+            PLAY, PAUSE, RELEASE, STOP
+        }
+
+        public enum SoundType {
+            MUSIC, SOUND
+        }
+
+        public static MediaPlayer playSound(Context context, int soundResource, SoundType soundType) {
+            MediaPlayer mp = MediaPlayer.create(context, soundResource);
+            if (soundType == SoundType.MUSIC)
+                if (HandleApplication.LoadPreferences(context, "MUSIC").equals("true"))
+                    mp.start();
+
+            if (soundType == SoundType.SOUND)
+                if (HandleApplication.LoadPreferences(context, "SOUND").equals("true"))
+                    mp.start();
+
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    mediaPlayer.release();
+                }
+            });
+
+            return mp;
+        }
+
+        public static void releasePlayer(MediaPlayer mp) {
+            try {
+                mp.reset();
+                mp.stop();
+                mp.release();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public static void ChangeSoundState(Context context, MediaPlayer mp, SoundState sound_state, SoundType soundType) {
+            try {
+                switch (sound_state) {
+                    case PLAY:
+                        if (mp != null) if (!mp.isPlaying()) if (soundType == SoundType.MUSIC)
+                            if (HandleApplication.LoadPreferences(context, "MUSIC").equals("true"))
+                                mp.start();
+
+                        if (soundType == SoundType.SOUND)
+                            if (HandleApplication.LoadPreferences(context, "SOUND").equals("true"))
+                                mp.start();
+                        ;
+                        break;
+                    case PAUSE:
+                        if (mp != null) if (mp.isPlaying()) mp.pause();
+                        break;
+                    case STOP:
+                        if (mp != null) if (mp.isPlaying()) mp.stop();
+                        break;
+                    case RELEASE:
+                        releasePlayer(mp);
+                        break;
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
     }
 }
