@@ -132,6 +132,7 @@ public class HandleUnit {
     public static String Authority;
     public static int ResultOfPayment;
     public static String LocalPath;
+    public static Activity currentActivity;
 
     public static final int MY_PERMISSIONS = 123;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -1067,7 +1068,7 @@ public class HandleUnit {
                     handleUncaughtException (activity, thread, e);
                 }
             });*/
-
+            currentActivity = activity;
             activity.setContentView(ActivityLayout);
             activity.setTitle("");
             DisplayMetrics metrics = new DisplayMetrics();
@@ -1116,6 +1117,7 @@ public class HandleUnit {
                 }
             });*/
 
+            currentActivity = activity;
             activity.setContentView(ActivityLayout);
             activity.setTitle("");
             DisplayMetrics metrics = new DisplayMetrics();
