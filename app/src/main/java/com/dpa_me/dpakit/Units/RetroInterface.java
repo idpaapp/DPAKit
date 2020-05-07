@@ -23,6 +23,6 @@ public interface RetroInterface {
     Call<AppAddressModel> getAddress_3(@Body String body);
 
     @Headers({"Content-Type: application/json"})
-    @POST("http://restook.ir/public_apis/HandleSMS/send_sms.php")
+    @POST("public_apis/HandleSMS/send_sms.php")
     Call<SimpleResult> sendCode(@Body String body);
 }
