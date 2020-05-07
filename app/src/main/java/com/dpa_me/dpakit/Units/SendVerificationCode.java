@@ -25,6 +25,7 @@ public class SendVerificationCode {
     private String Mobile;
     private String Template;
     private String AppName;
+    private String ServerAddress;
 
     public interface IOpration {
         void onSuccess();
@@ -44,13 +45,18 @@ public class SendVerificationCode {
         this.Template = Template;
     }
 
+    public SendVerificationCode setServerAddress(String serverAddress) {
+        this.ServerAddress = serverAddress;
+        return this;
+    }
+
     public SendVerificationCode sendCode(Activity activity) {
         String input = CreateInputJSON(new String[]{"phone", "code", "app_name", "template"},
                 new String[]{Mobile, Code, AppName, Template});
 
         ShowProgressDialog(activity);
 
-        new Retrofit.Builder().baseUrl("http://restook.ir").
+        new Retrofit.Builder().baseUrl(ServerAddress).
                 addConverterFactory(ScalarsConverterFactory.create()).
                 client(new OkHttpClient.Builder()
                         .connectTimeout(100, TimeUnit.SECONDS)
