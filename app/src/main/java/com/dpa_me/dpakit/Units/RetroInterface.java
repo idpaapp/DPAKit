@@ -1,6 +1,7 @@
 package com.dpa_me.dpakit.Units;
 
 import com.dpa_me.dpakit.Models.AppAddressModel;
+import com.dpa_me.dpakit.Models.AppSettings;
 import com.dpa_me.dpakit.Models.Configs;
 import com.dpa_me.dpakit.Models.SimpleResult;
 import com.dpa_me.dpakit.Models.loginUnityConfig;
@@ -38,4 +39,7 @@ public interface RetroInterface {
 
     @GET("https://remote-config-api.uca.cloud.unity3d.com/environments/{environmentId}/configs")
     Call<Configs> getConfigs(@Path("environmentId") String environmentId, @Query("projectId") String projectId);
+
+    @GET("https://api.npoint.io/{AppId}")
+    Call<AppSettings> getAppSettings(@Path("AppId") String AppId);
 }

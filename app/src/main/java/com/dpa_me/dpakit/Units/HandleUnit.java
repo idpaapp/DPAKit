@@ -62,6 +62,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.dpa_me.dpakit.Dialogs.ProgressDialog;
+import com.dpa_me.dpakit.Models.AppSettings;
 import com.dpa_me.dpakit.Models.ConfigModel;
 import com.dpa_me.dpakit.Models.Configs;
 import com.dpa_me.dpakit.Models.loginUnityConfig;
@@ -1417,8 +1418,40 @@ public class HandleUnit {
             void onFail(int ErrorSection);
         }
 
+        public interface IGetSettings {
+            void onGetSetting(AppSettings appSettings);
+
+            void onFail(int ErrorSection);
+        }
+
         public static final int errorOnGetToken = 1;
-        public static final int errorOnGetConfig = 3;
+        public static final int errorOnGetConfig = 2;
+        public static final int errorOnGetSettings = 3;
+
+        public static void getAppSettings(final String AppId, final IGetSettings iGetSettings){
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(100, TimeUnit.SECONDS)
+                    .readTimeout(100, TimeUnit.SECONDS).build();
+
+            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://api.npoint.io").
+                    addConverterFactory(ScalarsConverterFactory.create()).
+                    client(client).
+                    addConverterFactory(GsonConverterFactory.create()).
+                    build().create(RetroInterface.class);
+
+            retroInterface.getAppSettings(AppId).enqueue(new Callback<AppSettings>() {
+                @Override
+                public void onResponse(Call<AppSettings> call, Response<AppSettings> response) {
+                    if (response.body() != null)
+                        iGetSettings.onGetSetting(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<AppSettings> call, Throwable t) {
+                    iGetSettings.onFail(errorOnGetSettings);
+                }
+            });
+        }
 
         private static void getToken(final IGetToken iGetToken) {
             OkHttpClient client = new OkHttpClient.Builder()
