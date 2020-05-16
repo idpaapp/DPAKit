@@ -1,124 +1,115 @@
 package com.dpa_me.dpakit.Units;
 
-        import android.Manifest;
-        import android.animation.ObjectAnimator;
-        import android.animation.PropertyValuesHolder;
-        import android.animation.ValueAnimator;
-        import android.annotation.SuppressLint;
-        import android.app.Activity;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.content.pm.PackageInfo;
-        import android.content.pm.PackageManager;
-        import android.content.res.Resources;
-        import android.database.Cursor;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.graphics.Canvas;
-        import android.graphics.ColorMatrix;
-        import android.graphics.ColorMatrixColorFilter;
-        import android.graphics.Typeface;
-        import android.graphics.drawable.BitmapDrawable;
-        import android.graphics.drawable.Drawable;
-        import android.media.MediaPlayer;
-        import android.net.Uri;
-        import android.os.AsyncTask;
-        import android.os.Build;
-        import android.os.Environment;
-        import android.os.Handler;
-        import android.os.Message;
-        import android.os.StrictMode;
-        import android.preference.PreferenceManager;
-        import android.provider.Settings;
-        import android.text.Editable;
-        import android.text.Layout;
-        import android.text.TextWatcher;
-        import android.util.Base64;
-        import android.util.DisplayMetrics;
-        import android.util.Log;
-        import android.view.Gravity;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.view.WindowManager;
-        import android.view.animation.AlphaAnimation;
-        import android.view.animation.Animation;
-        import android.view.animation.AnimationSet;
-        import android.view.animation.AnimationUtils;
-        import android.view.animation.DecelerateInterpolator;
-        import android.view.animation.LinearInterpolator;
-        import android.view.animation.RotateAnimation;
-        import android.view.animation.Transformation;
-        import android.view.inputmethod.InputMethodManager;
-        import android.widget.EditText;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
-        import android.widget.ListView;
-        import android.widget.ProgressBar;
-        import android.widget.RelativeLayout;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.Manifest;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.Layout;
+import android.text.TextWatcher;
+import android.util.Base64;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.Transformation;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import androidx.annotation.RequiresApi;
-        import androidx.core.app.ActivityCompat;
-        import androidx.core.content.ContextCompat;
-        import androidx.fragment.app.Fragment;
-        import androidx.viewpager.widget.ViewPager;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
-        import com.dpa_me.dpakit.Dialogs.ProgressDialog;
-        import com.dpa_me.dpakit.R;
-        import com.google.android.material.snackbar.Snackbar;
-        import com.squareup.picasso.Picasso;
+import com.dpa_me.dpakit.Dialogs.ProgressDialog;
+import com.dpa_me.dpakit.Models.ConfigModel;
+import com.dpa_me.dpakit.Models.Configs;
+import com.dpa_me.dpakit.Models.loginUnityConfig;
+import com.dpa_me.dpakit.R;
+import com.google.android.material.snackbar.Snackbar;
 
-        import net.glxn.qrgen.android.QRCode;
+import net.glxn.qrgen.android.QRCode;
 
-        import org.apache.http.HttpEntity;
-        import org.apache.http.HttpResponse;
-        import org.apache.http.NameValuePair;
-        import org.apache.http.client.entity.UrlEncodedFormEntity;
-        import org.apache.http.client.methods.HttpPost;
-        import org.apache.http.entity.StringEntity;
-        import org.apache.http.impl.client.DefaultHttpClient;
-        import org.apache.http.message.BasicNameValuePair;
-        import org.apache.http.params.BasicHttpParams;
-        import org.apache.http.params.HttpConnectionParams;
-        import org.apache.http.protocol.HTTP;
-        import org.apache.http.util.ByteArrayBuffer;
-        import org.json.JSONArray;
-        import org.json.JSONException;
-        import org.json.JSONObject;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-        import java.io.BufferedInputStream;
-        import java.io.BufferedReader;
-        import java.io.ByteArrayOutputStream;
-        import java.io.File;
-        import java.io.FileInputStream;
-        import java.io.FileOutputStream;
-        import java.io.IOException;
-        import java.io.InputStream;
-        import java.io.InputStreamReader;
-        import java.io.OutputStream;
-        import java.io.UnsupportedEncodingException;
-        import java.lang.reflect.Field;
-        import java.net.HttpURLConnection;
-        import java.net.InetAddress;
-        import java.net.URL;
-        import java.net.URLConnection;
-        import java.nio.channels.FileChannel;
-        import java.security.MessageDigest;
-        import java.security.NoSuchAlgorithmException;
-        import java.text.DecimalFormat;
-        import java.text.DecimalFormatSymbols;
-        import java.text.NumberFormat;
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.List;
-        import java.util.Map;
-        import java.util.Random;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.channels.FileChannel;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
-        import static android.widget.ImageView.ScaleType.CENTER_CROP;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+import static android.widget.ImageView.ScaleType.CENTER_CROP;
 
 public class HandleUnit {
     public static String current;
@@ -141,7 +132,7 @@ public class HandleUnit {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    public static class  HandleAnimations{
+    public static class HandleAnimations {
         public static ObjectAnimator BounceAnimation(View view, int duration) {
             PropertyValuesHolder scalex = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.8f);
             PropertyValuesHolder scaley = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.8f);
@@ -566,15 +557,15 @@ public class HandleUnit {
             return BitmapFactory.decodeStream(url.openConnection().getInputStream());
         }
 
-        public static Bitmap GenerateQRCode(String txt){
+        public static Bitmap GenerateQRCode(String txt) {
             return QRCode.from(txt).withColor(0xFF000000, 0xFFFFFFFF).bitmap();
         }
 
-        public static Bitmap GenerateQRCode(String txt, int onColor, int offColor){
+        public static Bitmap GenerateQRCode(String txt, int onColor, int offColor) {
             return QRCode.from(txt).withColor(onColor, offColor).bitmap();
         }
 
-        public static void ShareLink(Activity activity,  String subject, String body){
+        public static void ShareLink(Activity activity, String subject, String body) {
             Intent share = new Intent(Intent.ACTION_SEND);
             share.setType("text/plain");
             share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -1411,5 +1402,97 @@ public class HandleUnit {
             }
         }
 
+    }
+
+    public static class HandleServerConfig {
+        public interface IGetToken {
+            void onGetToken(String token);
+
+            void onFail();
+        }
+
+        public interface IGetConfig {
+            void onGetConfig(Configs configs);
+
+            void onFail(int ErrorSection);
+        }
+
+        public static final int errorOnGetToken = 1;
+        public static final int errorOnGetConfig = 3;
+
+        private static void getToken(final IGetToken iGetToken) {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(100, TimeUnit.SECONDS)
+                    .readTimeout(100, TimeUnit.SECONDS).build();
+
+            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://api.unity.com").
+                    addConverterFactory(ScalarsConverterFactory.create()).
+                    client(client).
+                    addConverterFactory(GsonConverterFactory.create()).
+                    build().create(RetroInterface.class);
+
+            String input = HandleString.CreateInputJSON(new String[]{"username", "password", "grant_type"},
+                    new String[]{"dpa.developments@gmail.com", "KetabMetab88", "PASSWORD"});
+
+            retroInterface.loginUnityConfig(input).enqueue(new Callback<loginUnityConfig>() {
+                @Override
+                public void onResponse(Call<loginUnityConfig> call, Response<loginUnityConfig> response) {
+                    if (response.body().getAccess_token() != null)
+                        iGetToken.onGetToken(response.body().getAccess_token());
+                }
+
+                @Override
+                public void onFailure(Call<loginUnityConfig> call, Throwable t) {
+                    iGetToken.onFail();
+                }
+            });
+        }
+
+        public static void getConfig(final String environmentId, final String projectId, final IGetConfig iGetConfig) {
+            getToken(new IGetToken() {
+                @Override
+                public void onGetToken(final String token) {
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .addInterceptor(new Interceptor() {
+                                @NotNull
+                                @Override
+                                public okhttp3.Response intercept(@NotNull Chain chain) throws IOException {
+                                    Request.Builder ongoing = chain.request().newBuilder();
+                                    ongoing.addHeader("Accept", "application/json;versions=1");
+                                    ongoing.addHeader("Authorization", token);
+                                    return chain.proceed(ongoing.build());
+                                }
+                            })
+                            .connectTimeout(100, TimeUnit.SECONDS)
+                            .readTimeout(100, TimeUnit.SECONDS).build();
+
+                    final RetroInterface retroInterface = new Retrofit.Builder().
+                            baseUrl("https://remote-config-api.uca.cloud.unity3d.com").
+                            addConverterFactory(ScalarsConverterFactory.create()).
+                            client(client).
+                            addConverterFactory(GsonConverterFactory.create()).
+                            build().create(RetroInterface.class);
+
+
+                    retroInterface.getConfigs(environmentId, projectId).enqueue(new Callback<Configs>() {
+                        @Override
+                        public void onResponse(Call<Configs> call, Response<Configs> response) {
+                            if (response.body().getConfigs() != null)
+                                iGetConfig.onGetConfig(new Configs(response.body().getConfigs()));
+                        }
+
+                        @Override
+                        public void onFailure(Call<Configs> call, Throwable t) {
+                            iGetConfig.onFail(errorOnGetConfig);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail() {
+                    iGetConfig.onFail(errorOnGetToken);
+                }
+            });
+        }
     }
 }
