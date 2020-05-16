@@ -36,6 +36,6 @@ public interface RetroInterface {
     @POST("https://api.unity.com/v1/core/api/login")
     Call<loginUnityConfig> loginUnityConfig(@Body String body);
 
-    @GET("https://remote-config-api.uca.cloud.unity3d.com/environments/{environmentId}/configs?projectId={projectId}")
-    Call<Configs> getConfigs(@Path("environmentId") String environmentId, @Path("environmentId") String projectId);
+    @GET("https://remote-config-api.uca.cloud.unity3d.com/environments/{environmentId}/configs")
+    Call<Configs> getConfigs(@Path("environmentId") String environmentId, @Query("projectId") String projectId);
 }
