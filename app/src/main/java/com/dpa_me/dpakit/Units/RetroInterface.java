@@ -40,6 +40,6 @@ public interface RetroInterface {
     @GET("https://remote-config-api.uca.cloud.unity3d.com/environments/{environmentId}/configs")
     Call<Configs> getConfigs(@Path("environmentId") String environmentId, @Query("projectId") String projectId);
 
-    @GET("https://api.npoint.io/{AppId}")
+    @GET("https://extendsclass.com/api/json-storage/bin/{AppId}")
     Call<AppSettings> getAppSettings(@Path("AppId") String AppId);
 }
