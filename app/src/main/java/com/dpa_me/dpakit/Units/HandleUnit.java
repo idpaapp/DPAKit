@@ -1458,8 +1458,7 @@ public class HandleUnit {
                                 @Override
                                 public okhttp3.Response intercept(@NotNull Chain chain) throws IOException {
                                     Request.Builder ongoing = chain.request().newBuilder();
-                                    ongoing.addHeader("Accept", "application/json;versions=1");
-                                    ongoing.addHeader("Authorization", token);
+                                    ongoing.addHeader("Authorization", "Bearer " + token);
                                     return chain.proceed(ongoing.build());
                                 }
                             })
