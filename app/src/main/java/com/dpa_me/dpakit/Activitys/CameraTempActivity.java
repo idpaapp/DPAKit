@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat;
 
 import com.dpa_me.dpakit.R;
 import com.google.android.material.snackbar.Snackbar;
-import com.marcinorlowski.fonty.Fonty;
 import com.yalantis.ucrop.UCrop;
 
 import org.apache.commons.io.FileUtils;

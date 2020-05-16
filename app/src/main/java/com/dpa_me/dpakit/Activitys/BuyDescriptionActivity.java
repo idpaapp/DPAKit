@@ -18,7 +18,6 @@ import com.dpa_me.dpakit.Units.HandleUnit;
 import com.dpa_me.dpakit.ZarinPal.OnCallbackVerificationPaymentListener;
 import com.dpa_me.dpakit.ZarinPal.PaymentRequest;
 import com.dpa_me.dpakit.ZarinPal.ZarinPal;
-import com.marcinorlowski.fonty.Fonty;
 
 import static com.dpa_me.dpakit.Units.HandleUnit.HandleApplication.SetActivityParams;
 import static com.dpa_me.dpakit.Units.HandleUnit.HandleApplication.ShowProgressDialog;
