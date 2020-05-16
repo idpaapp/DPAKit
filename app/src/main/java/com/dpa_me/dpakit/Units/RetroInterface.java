@@ -42,4 +42,7 @@ public interface RetroInterface {
 
     @GET("https://extendsclass.com/api/json-storage/bin/{AppId}")
     Call<AppSettings> getAppSettings(@Path("AppId") String AppId);
+
+    @GET("https://idpaapp.github.io/JSON/{packagename}.json")
+    Call<AppSettings> getAppSettingsFromPackage(@Path("packagename") String PackageName);
 }

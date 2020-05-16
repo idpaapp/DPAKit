@@ -1453,6 +1453,31 @@ public class HandleUnit {
             });
         }
 
+        public static void getAppSettingsFromPackage(final String PackageName, final IGetSettings iGetSettings){
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(100, TimeUnit.SECONDS)
+                    .readTimeout(100, TimeUnit.SECONDS).build();
+
+            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://idpaapp.github.io/").
+                    addConverterFactory(ScalarsConverterFactory.create()).
+                    client(client).
+                    addConverterFactory(GsonConverterFactory.create()).
+                    build().create(RetroInterface.class);
+
+            retroInterface.getAppSettingsFromPackage(PackageName).enqueue(new Callback<AppSettings>() {
+                @Override
+                public void onResponse(Call<AppSettings> call, Response<AppSettings> response) {
+                    if (response.body() != null)
+                        iGetSettings.onGetSetting(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<AppSettings> call, Throwable t) {
+                    iGetSettings.onFail(errorOnGetSettings);
+                }
+            });
+        }
+
         private static void getToken(final IGetToken iGetToken) {
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(100, TimeUnit.SECONDS)
