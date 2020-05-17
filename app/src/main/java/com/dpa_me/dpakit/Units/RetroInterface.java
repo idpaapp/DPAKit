@@ -2,12 +2,11 @@ package com.dpa_me.dpakit.Units;
 
 import com.dpa_me.dpakit.Models.AppAddressModel;
 import com.dpa_me.dpakit.Models.AppSettings;
-import com.dpa_me.dpakit.Models.Configs;
 import com.dpa_me.dpakit.Models.SimpleResult;
-import com.dpa_me.dpakit.Models.loginUnityConfig;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -38,5 +37,5 @@ public interface RetroInterface {
     Call<AppSettings> getAppSettings(@Body String body);
 
     @GET("https://jsonbox.io/{boxid}")
-    Call<AppSettings> getAppSettings(@Path("boxid") String BoxId, @Query("q") String Query);
+    Call<ArrayList<AppSettings>> getAppSettings(@Path("boxid") String BoxId, @Query("q") String Query);
 }

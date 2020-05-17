@@ -1423,23 +1423,25 @@ public class HandleUnit {
                     ",MinSupportVersion:<=" + AppVersion +
                     ",MaxSupportVersion:>=" + AppVersion;
 
-            retroInterface.getAppSettings(BoxId, Query).enqueue(new Callback<AppSettings>() {
+            retroInterface.getAppSettings(BoxId, Query).enqueue(new Callback<ArrayList<AppSettings>>() {
                 @Override
-                public void onResponse(Call<AppSettings> call, Response<AppSettings> response) {
+                public void onResponse(Call<ArrayList<AppSettings>> call, Response<ArrayList<AppSettings>> response) {
                     if (response.body() != null)
-                        if (response.body().isMaintenanceBreak())
-                            iGetSettings.onMaintenanceBreak();
-                        else iGetSettings.onGetSetting(response.body());
+                        if (response.body().size() > 0) {
+                            if (response.body().get(0).isMaintenanceBreak())
+                                iGetSettings.onMaintenanceBreak();
+                            else iGetSettings.onGetSetting(response.body().get(0));
+                        } else getAppSettings(PackageName, AppVersion, iGetSettings);
                 }
 
                 @Override
-                public void onFailure(Call<AppSettings> call, Throwable t) {
-                    getAppSettingsFromPackage(PackageName, AppVersion, iGetSettings);
+                public void onFailure(Call<ArrayList<AppSettings>> call, Throwable t) {
+                    getAppSettings(PackageName, AppVersion, iGetSettings);
                 }
             });
         }
 
-        public static void getAppSettingsFromPackage(String PackageName, String AppVersion, final IGetSettings iGetSettings) {
+        public static void getAppSettings(String PackageName, String AppVersion, final IGetSettings iGetSettings) {
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS).build();
@@ -1456,10 +1458,11 @@ public class HandleUnit {
             retroInterface.getAppSettings("").enqueue(new Callback<AppSettings>() {
                 @Override
                 public void onResponse(Call<AppSettings> call, Response<AppSettings> response) {
-                    if (response.body() != null)
+                    if (response.body() != null) {
                         if (response.body().isMaintenanceBreak())
                             iGetSettings.onMaintenanceBreak();
                         else iGetSettings.onGetSetting(response.body());
+                    }else iGetSettings.onFail();
                 }
 
                 @Override
