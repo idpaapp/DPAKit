@@ -1431,6 +1431,7 @@ public class HandleUnit {
         public static void getAppSettings(final String AppId, final IGetSettings iGetSettings){
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(100, TimeUnit.SECONDS)
+                    .followSslRedirects(true)
                     .readTimeout(100, TimeUnit.SECONDS).build();
 
             final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://api.npoint.io").
@@ -1456,6 +1457,7 @@ public class HandleUnit {
         public static void getAppSettingsFromPackage(final String PackageName, final IGetSettings iGetSettings){
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(100, TimeUnit.SECONDS)
+                    .followSslRedirects(true)
                     .readTimeout(100, TimeUnit.SECONDS).build();
 
             final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://idpaapp.github.io/").
@@ -1481,6 +1483,7 @@ public class HandleUnit {
         private static void getToken(final IGetToken iGetToken) {
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(100, TimeUnit.SECONDS)
+                    .followSslRedirects(true)
                     .readTimeout(100, TimeUnit.SECONDS).build();
 
             final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://api.unity.com").
