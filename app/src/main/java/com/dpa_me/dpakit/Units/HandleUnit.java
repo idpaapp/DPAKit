@@ -1406,41 +1406,26 @@ public class HandleUnit {
     }
 
     public static class HandleServerConfig {
-        public interface IGetToken {
-            void onGetToken(String token);
-
-            void onFail();
-        }
-
-        public interface IGetConfig {
-            void onGetConfig(Configs configs);
-
-            void onFail(int ErrorSection);
-        }
-
         public interface IGetSettings {
             void onGetSetting(AppSettings appSettings);
 
             void onFail(int ErrorSection);
         }
 
-        public static final int errorOnGetToken = 1;
-        public static final int errorOnGetConfig = 2;
         public static final int errorOnGetSettings = 3;
 
-        public static void getAppSettings(final String AppId, final IGetSettings iGetSettings){
+        public static void getAppSettingsFromPackage(final String BoxId, final String PackageName, final IGetSettings iGetSettings){
             OkHttpClient client = new OkHttpClient.Builder()
-                    .connectTimeout(100, TimeUnit.SECONDS)
-                    .followSslRedirects(true)
-                    .readTimeout(100, TimeUnit.SECONDS).build();
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(10, TimeUnit.SECONDS).build();
 
-            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://api.npoint.io").
+            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://jsonbox.io/").
                     addConverterFactory(ScalarsConverterFactory.create()).
                     client(client).
                     addConverterFactory(GsonConverterFactory.create()).
                     build().create(RetroInterface.class);
 
-            retroInterface.getAppSettings(AppId).enqueue(new Callback<AppSettings>() {
+            retroInterface.getAppSettingsFromPackage(BoxId, PackageName).enqueue(new Callback<AppSettings>() {
                 @Override
                 public void onResponse(Call<AppSettings> call, Response<AppSettings> response) {
                     if (response.body() != null)
@@ -1450,107 +1435,6 @@ public class HandleUnit {
                 @Override
                 public void onFailure(Call<AppSettings> call, Throwable t) {
                     iGetSettings.onFail(errorOnGetSettings);
-                }
-            });
-        }
-
-        public static void getAppSettingsFromPackage(final String PackageName, final IGetSettings iGetSettings){
-            OkHttpClient client = new OkHttpClient.Builder()
-                    .connectTimeout(100, TimeUnit.SECONDS)
-                    .followSslRedirects(true)
-                    .readTimeout(100, TimeUnit.SECONDS).build();
-
-            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://idpaapp.github.io/").
-                    addConverterFactory(ScalarsConverterFactory.create()).
-                    client(client).
-                    addConverterFactory(GsonConverterFactory.create()).
-                    build().create(RetroInterface.class);
-
-            retroInterface.getAppSettingsFromPackage(PackageName).enqueue(new Callback<AppSettings>() {
-                @Override
-                public void onResponse(Call<AppSettings> call, Response<AppSettings> response) {
-                    if (response.body() != null)
-                        iGetSettings.onGetSetting(response.body());
-                }
-
-                @Override
-                public void onFailure(Call<AppSettings> call, Throwable t) {
-                    iGetSettings.onFail(errorOnGetSettings);
-                }
-            });
-        }
-
-        private static void getToken(final IGetToken iGetToken) {
-            OkHttpClient client = new OkHttpClient.Builder()
-                    .connectTimeout(100, TimeUnit.SECONDS)
-                    .followSslRedirects(true)
-                    .readTimeout(100, TimeUnit.SECONDS).build();
-
-            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://api.unity.com").
-                    addConverterFactory(ScalarsConverterFactory.create()).
-                    client(client).
-                    addConverterFactory(GsonConverterFactory.create()).
-                    build().create(RetroInterface.class);
-
-            String input = HandleString.CreateInputJSON(new String[]{"username", "password", "grant_type"},
-                    new String[]{"dpa.developments@gmail.com", "KetabMetab88", "PASSWORD"});
-
-            retroInterface.loginUnityConfig(input).enqueue(new Callback<loginUnityConfig>() {
-                @Override
-                public void onResponse(Call<loginUnityConfig> call, Response<loginUnityConfig> response) {
-                    if (response.body().getAccess_token() != null)
-                        iGetToken.onGetToken(response.body().getAccess_token());
-                }
-
-                @Override
-                public void onFailure(Call<loginUnityConfig> call, Throwable t) {
-                    iGetToken.onFail();
-                }
-            });
-        }
-
-        public static void getConfig(final String environmentId, final String projectId, final IGetConfig iGetConfig) {
-            getToken(new IGetToken() {
-                @Override
-                public void onGetToken(final String token) {
-                    OkHttpClient client = new OkHttpClient.Builder()
-                            .addInterceptor(new Interceptor() {
-                                @NotNull
-                                @Override
-                                public okhttp3.Response intercept(@NotNull Chain chain) throws IOException {
-                                    Request.Builder ongoing = chain.request().newBuilder();
-                                    ongoing.addHeader("Authorization", "Bearer " + token);
-                                    return chain.proceed(ongoing.build());
-                                }
-                            })
-                            .connectTimeout(100, TimeUnit.SECONDS)
-                            .readTimeout(100, TimeUnit.SECONDS).build();
-
-                    final RetroInterface retroInterface = new Retrofit.Builder().
-                            baseUrl("https://remote-config-api.uca.cloud.unity3d.com").
-                            addConverterFactory(ScalarsConverterFactory.create()).
-                            client(client).
-                            addConverterFactory(GsonConverterFactory.create()).
-                            build().create(RetroInterface.class);
-
-
-                    retroInterface.getConfigs(environmentId, projectId).enqueue(new Callback<Configs>() {
-                        @Override
-                        public void onResponse(Call<Configs> call, Response<Configs> response) {
-                            if (response.body().getConfigs() != null)
-                                iGetConfig.onGetConfig(new Configs(response.body().getConfigs()));
-                        }
-
-                        @Override
-                        public void onFailure(Call<Configs> call, Throwable t) {
-                            iGetConfig.onFail(errorOnGetConfig);
-                        }
-                    });
-                }
-
-                @Override
-                public void onFail() {
-                    iGetConfig.onFail(errorOnGetToken);
                 }
             });
         }

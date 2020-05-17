@@ -33,16 +33,6 @@ public interface RetroInterface {
     @POST("public_apis/HandleSMS/send_sms.php")
     Call<SimpleResult> sendCode(@Body String body);
 
-    @Headers({"Content-Type: application/json"})
-    @POST("https://api.unity.com/v1/core/api/login")
-    Call<loginUnityConfig> loginUnityConfig(@Body String body);
-
-    @GET("https://remote-config-api.uca.cloud.unity3d.com/environments/{environmentId}/configs")
-    Call<Configs> getConfigs(@Path("environmentId") String environmentId, @Query("projectId") String projectId);
-
-    @GET("https://extendsclass.com/api/json-storage/bin/{AppId}")
-    Call<AppSettings> getAppSettings(@Path("AppId") String AppId);
-
-    @GET("https://idpaapp.github.io/JSON/{packagename}.json")
-    Call<AppSettings> getAppSettingsFromPackage(@Path("packagename") String PackageName);
+    @GET("https://jsonbox.io/{boxid}?q=AppPackage:{packagename}")
+    Call<AppSettings> getAppSettingsFromPackage(@Path("boxid") String BoxId, @Query("q") String PackageName);
 }
