@@ -1432,6 +1432,7 @@ public class HandleUnit {
                                 iGetSettings.onMaintenanceBreak();
                             else iGetSettings.onGetSetting(response.body().get(0));
                         } else getAppSettings(PackageName, AppVersion, iGetSettings);
+                    else getAppSettings(PackageName, AppVersion, iGetSettings);
                 }
 
                 @Override
