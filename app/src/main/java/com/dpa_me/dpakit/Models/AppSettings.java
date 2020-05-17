@@ -6,7 +6,8 @@ public class AppSettings {
     private String ApiURL;
     private String MediaURL;
     private boolean MaintenanceBreak;
-    private boolean SupportVersion;
+    private int MinSupportVersion;
+    private int MaxSupportVersion;
 
     public String get_id() {
         return _id;
@@ -28,7 +29,11 @@ public class AppSettings {
         return MaintenanceBreak;
     }
 
-    public boolean isSupportVersion() {
-        return SupportVersion;
+    public int getMinSupportVersion() {
+        return MinSupportVersion;
+    }
+
+    public int getMaxSupportVersion() {
+        return MaxSupportVersion;
     }
 }

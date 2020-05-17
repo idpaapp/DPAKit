@@ -63,15 +63,11 @@ import androidx.fragment.app.Fragment;
 
 import com.dpa_me.dpakit.Dialogs.ProgressDialog;
 import com.dpa_me.dpakit.Models.AppSettings;
-import com.dpa_me.dpakit.Models.ConfigModel;
-import com.dpa_me.dpakit.Models.Configs;
-import com.dpa_me.dpakit.Models.loginUnityConfig;
 import com.dpa_me.dpakit.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import net.glxn.qrgen.android.QRCode;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,9 +96,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -1409,12 +1403,12 @@ public class HandleUnit {
         public interface IGetSettings {
             void onGetSetting(AppSettings appSettings);
 
-            void onFail(int ErrorSection);
+            void onMaintenanceBreak();
+
+            void onFail();
         }
 
-        public static final int errorOnGetSettings = 3;
-
-        public static void getAppSettingsFromPackage(final String BoxId, final String PackageName, final IGetSettings iGetSettings){
+        public static void getAppSettings(String BoxId, final String PackageName, final String AppVersion, final IGetSettings iGetSettings) {
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS).build();
@@ -1425,16 +1419,52 @@ public class HandleUnit {
                     addConverterFactory(GsonConverterFactory.create()).
                     build().create(RetroInterface.class);
 
-            retroInterface.getAppSettingsFromPackage(BoxId, PackageName).enqueue(new Callback<AppSettings>() {
+            String Query = "AppPackage:" + PackageName +
+                    ",MinSupportVersion:<=" + AppVersion +
+                    ",MaxSupportVersion:>=" + AppVersion;
+
+            retroInterface.getAppSettings(BoxId, Query).enqueue(new Callback<AppSettings>() {
                 @Override
                 public void onResponse(Call<AppSettings> call, Response<AppSettings> response) {
                     if (response.body() != null)
-                        iGetSettings.onGetSetting(response.body());
+                        if (response.body().isMaintenanceBreak())
+                            iGetSettings.onMaintenanceBreak();
+                        else iGetSettings.onGetSetting(response.body());
                 }
 
                 @Override
                 public void onFailure(Call<AppSettings> call, Throwable t) {
-                    iGetSettings.onFail(errorOnGetSettings);
+                    getAppSettingsFromPackage(PackageName, AppVersion, iGetSettings);
+                }
+            });
+        }
+
+        public static void getAppSettingsFromPackage(String PackageName, String AppVersion, final IGetSettings iGetSettings) {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(10, TimeUnit.SECONDS).build();
+
+            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("http://volcan.ir").
+                    addConverterFactory(ScalarsConverterFactory.create()).
+                    client(client).
+                    addConverterFactory(GsonConverterFactory.create()).
+                    build().create(RetroInterface.class);
+
+            String input = HandleString.CreateInputJSON(new String[]{"AppPackage", "AppVersion"},
+                    new String[]{PackageName, AppVersion});
+
+            retroInterface.getAppSettings("").enqueue(new Callback<AppSettings>() {
+                @Override
+                public void onResponse(Call<AppSettings> call, Response<AppSettings> response) {
+                    if (response.body() != null)
+                        if (response.body().isMaintenanceBreak())
+                            iGetSettings.onMaintenanceBreak();
+                        else iGetSettings.onGetSetting(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<AppSettings> call, Throwable t) {
+                    iGetSettings.onFail();
                 }
             });
         }

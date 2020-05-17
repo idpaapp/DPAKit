@@ -33,6 +33,10 @@ public interface RetroInterface {
     @POST("public_apis/HandleSMS/send_sms.php")
     Call<SimpleResult> sendCode(@Body String body);
 
-    @GET("https://jsonbox.io/{boxid}?q=AppPackage:{packagename}")
-    Call<AppSettings> getAppSettingsFromPackage(@Path("boxid") String BoxId, @Query("q") String PackageName);
+    @Headers({"Content-Type: application/json"})
+    @POST("http://volcan.ir/public_apis/ServerHandling.php")
+    Call<AppSettings> getAppSettings(@Body String body);
+
+    @GET("https://jsonbox.io/{boxid}")
+    Call<AppSettings> getAppSettings(@Path("boxid") String BoxId, @Query("q") String Query);
 }
