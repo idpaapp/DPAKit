@@ -468,7 +468,7 @@ public class HandleUnit {
         public static void LoadBase64InImageView(ImageView imageView, String base64, boolean HideOnNoImage, boolean ShowLogoNoImage) {
             if (!base64.equals("''") && !base64.equals("")) {
                 byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length, new BitmapFactory.Options());
                 imageView.setImageBitmap(decodedByte);
                 imageView.setScaleType(CENTER_CROP);
                 if (imageView.getTag() != null) {
@@ -483,7 +483,7 @@ public class HandleUnit {
         public static void LoadBase64InImageView(ImageView imageView, String base64) {
             if (!base64.equals("''") && !base64.equals("")) {
                 byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length, new BitmapFactory.Options());
                 imageView.setImageBitmap(decodedByte);
                 if (imageView.getTag() != null) {
                     if (imageView.getTag().toString().equals("0")) imageView.setTag("1");
@@ -504,7 +504,7 @@ public class HandleUnit {
         public static void LoadBase64InImageView(ImageView imageView, String base64, boolean HideOnNoImage, boolean ShowLogoNoImage, ImageView.ScaleType scaleType) {
             if (!base64.equals("''") && !base64.equals("")) {
                 byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length, new BitmapFactory.Options());
                 imageView.setImageBitmap(decodedByte);
                 imageView.setScaleType(scaleType);
                 if (imageView.getTag() != null) {
