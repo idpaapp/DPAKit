@@ -1408,46 +1408,12 @@ public class HandleUnit {
             void onFail();
         }
 
-        public static void getAppSettings(String BoxId, final String PackageName, final String AppVersion, final IGetSettings iGetSettings) {
+        public static void getAppSettings(String PackageName, String AppVersion , String BaseUrl, final IGetSettings iGetSettings) {
             OkHttpClient client = new OkHttpClient.Builder()
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(10, TimeUnit.SECONDS).build();
+                    .connectTimeout(1, TimeUnit.SECONDS)
+                    .readTimeout(1, TimeUnit.SECONDS).build();
 
-            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("https://jsonbox.io/").
-                    addConverterFactory(ScalarsConverterFactory.create()).
-                    client(client).
-                    addConverterFactory(GsonConverterFactory.create()).
-                    build().create(RetroInterface.class);
-
-            String Query = "AppPackage:" + PackageName +
-                    ",MinSupportVersion:<=" + AppVersion +
-                    ",MaxSupportVersion:>=" + AppVersion;
-
-            retroInterface.getAppSettings(BoxId, Query).enqueue(new Callback<ArrayList<AppSettings>>() {
-                @Override
-                public void onResponse(Call<ArrayList<AppSettings>> call, Response<ArrayList<AppSettings>> response) {
-                    if (response.body() != null)
-                        if (response.body().size() > 0) {
-                            if (response.body().get(0).isMaintenanceBreak())
-                                iGetSettings.onMaintenanceBreak();
-                            else iGetSettings.onGetSetting(response.body().get(0));
-                        } else getAppSettings(PackageName, AppVersion, iGetSettings);
-                    else getAppSettings(PackageName, AppVersion, iGetSettings);
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<AppSettings>> call, Throwable t) {
-                    getAppSettings(PackageName, AppVersion, iGetSettings);
-                }
-            });
-        }
-
-        public static void getAppSettings(String PackageName, String AppVersion, final IGetSettings iGetSettings) {
-            OkHttpClient client = new OkHttpClient.Builder()
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(10, TimeUnit.SECONDS).build();
-
-            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl("http://volcan.ir").
+            final RetroInterface retroInterface = new Retrofit.Builder().baseUrl(BaseUrl).
                     addConverterFactory(ScalarsConverterFactory.create()).
                     client(client).
                     addConverterFactory(GsonConverterFactory.create()).
@@ -1456,7 +1422,7 @@ public class HandleUnit {
             String input = HandleString.CreateInputJSON(new String[]{"AppPackage", "AppVersion"},
                     new String[]{PackageName, AppVersion});
 
-            retroInterface.getAppSettings("").enqueue(new Callback<AppSettings>() {
+            retroInterface.getAppSettings(input).enqueue(new Callback<AppSettings>() {
                 @Override
                 public void onResponse(Call<AppSettings> call, Response<AppSettings> response) {
                     if (response.body() != null) {

@@ -33,9 +33,7 @@ public interface RetroInterface {
     Call<SimpleResult> sendCode(@Body String body);
 
     @Headers({"Content-Type: application/json"})
-    @POST("http://volcan.ir/public_apis/ServerHandling.php")
+    @POST("ServerHandling.php")
     Call<AppSettings> getAppSettings(@Body String body);
 
-    @GET("https://jsonbox.io/{boxid}")
-    Call<ArrayList<AppSettings>> getAppSettings(@Path("boxid") String BoxId, @Query("q") String Query);
 }
