@@ -172,6 +172,9 @@ public class SimpleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             isi_txt_caption.setText(info.getTitle());
 
+            if (info.getColor() > 0)
+                isi_txt_caption.setTextColor(mActivity.getResources().getColor(info.getColor()));
+
             if (showSelected && info.isSelected())
                 isi_txt_caption.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
         }
