@@ -26,6 +26,13 @@ public class SimpleModel implements Serializable {
         this.options = options;
     }
 
+    public SimpleModel(int id, String title, String options, int color) {
+        this.id = id;
+        this.title = title;
+        this.options = options;
+        this.color = color;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

@@ -1410,8 +1410,8 @@ public class HandleUnit {
 
         public static void getAppSettings(String PackageName, String AppVersion , String BaseUrl, final IGetSettings iGetSettings) {
             OkHttpClient client = new OkHttpClient.Builder()
-                    .connectTimeout(1, TimeUnit.SECONDS)
-                    .readTimeout(1, TimeUnit.SECONDS).build();
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(10, TimeUnit.SECONDS).build();
 
             final RetroInterface retroInterface = new Retrofit.Builder().baseUrl(BaseUrl).
                     addConverterFactory(ScalarsConverterFactory.create()).
